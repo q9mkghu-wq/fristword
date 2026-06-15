@@ -68,6 +68,8 @@ function renderStage1(scene) {
   speakKorean(scene.kr);
 
   const prevDisabled = idx === 0 ? 'disabled' : '';
+  const jumpBackDisabled = idx === 0 ? 'disabled' : '';
+  const jumpFwdDisabled = idx >= order.length - 1 ? 'disabled' : '';
   els.controls.innerHTML = `
     <button class="btn secondary" id="prevSceneBtn" ${prevDisabled}>← 이전 상황</button>
     <button class="btn" id="nextBtn">핵심 단어 보기 →</button>
@@ -78,6 +80,27 @@ function renderStage1(scene) {
     idx--;
     loadScene();
   };
+
+  removeJumpControls();
+  els.controls.insertAdjacentHTML('afterend', `
+    <div class="jump-controls" id="jumpControls">
+      <button class="btn jump-btn" id="jumpBackBtn" ${jumpBackDisabled}>« 100개 뒤로</button>
+      <button class="btn jump-btn" id="jumpFwdBtn" ${jumpFwdDisabled}>100개 앞으로 »</button>
+    </div>
+  `);
+  document.getElementById('jumpBackBtn').onclick = () => jumpBy(-100);
+  document.getElementById('jumpFwdBtn').onclick = () => jumpBy(100);
+}
+
+function removeJumpControls() {
+  const el = document.getElementById('jumpControls');
+  if (el) el.remove();
+}
+
+function jumpBy(amount) {
+  const max = order.length - 1;
+  idx = Math.min(max, Math.max(0, idx + amount));
+  loadScene();
 }
 
 function fallbackData(scene) {
@@ -97,6 +120,7 @@ function goToStage2(scene) {
 }
 
 function renderStage2(scene, data) {
+  removeJumpControls();
   const items = data.keywords.map(k => `
     <div class="keyword-chip">
       <span class="en">${k.en}</span>
