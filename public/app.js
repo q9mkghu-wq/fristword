@@ -67,8 +67,17 @@ function renderStage1(scene) {
   document.getElementById('speakBtn').onclick = () => speakKorean(scene.kr);
   speakKorean(scene.kr);
 
-  els.controls.innerHTML = `<button class="btn" id="nextBtn">핵심 단어 보기 →</button>`;
+  const prevDisabled = idx === 0 ? 'disabled' : '';
+  els.controls.innerHTML = `
+    <button class="btn secondary" id="prevSceneBtn" ${prevDisabled}>← 이전 상황</button>
+    <button class="btn" id="nextBtn">핵심 단어 보기 →</button>
+  `;
   document.getElementById('nextBtn').onclick = () => goToStage2(scene);
+  document.getElementById('prevSceneBtn').onclick = () => {
+    if (idx === 0) return;
+    idx--;
+    loadScene();
+  };
 }
 
 function fallbackData(scene) {
@@ -101,8 +110,16 @@ function renderStage2(scene, data) {
     <div class="keyword-list">${items}</div>
   `;
 
-  els.controls.innerHTML = `<button class="btn" id="toStage3">예문 3개 보기 →</button>`;
+  els.controls.innerHTML = `
+    <button class="btn secondary" id="backToStage1">← 상황 다시 보기</button>
+    <button class="btn" id="toStage3">예문 3개 보기 →</button>
+  `;
   document.getElementById('toStage3').onclick = () => goToStage3(scene, data);
+  document.getElementById('backToStage1').onclick = () => {
+    stage = 1;
+    updateSteps();
+    renderStage1(scene);
+  };
 }
 
 function goToStage3(scene, data) {
@@ -123,7 +140,19 @@ function goToStage3(scene, data) {
   `;
 
   const isLast = idx >= order.length - 1;
-  els.controls.innerHTML = `<button class="btn" id="nextSceneBtn">${isLast ? '결과 끝 · 다시 시작' : '다음 상황 →'}</button>`;
+  const nextLabel = isLast ? '결과 끝 · 다시 시작' : '다음 상황 →';
+
+  els.controls.innerHTML = `
+    <button class="btn secondary" id="backToStage2">← 단어 다시 보기</button>
+    <button class="btn" id="nextSceneBtn">${nextLabel}</button>
+  `;
+
+  document.getElementById('backToStage2').onclick = () => {
+    stage = 2;
+    updateSteps();
+    renderStage2(scene, data);
+  };
+
   document.getElementById('nextSceneBtn').onclick = () => {
     if (isLast) {
       order = shuffle(scenes.map((_, i) => i)).slice(0, SESSION_SIZE);
