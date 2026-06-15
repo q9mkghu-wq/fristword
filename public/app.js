@@ -112,7 +112,7 @@ function renderStage2(scene, data) {
 
   els.controls.innerHTML = `
     <button class="btn secondary" id="backToStage1">← 상황 다시 보기</button>
-    <button class="btn" id="toStage3">예문 3개 보기 →</button>
+    <button class="btn" id="toStage3">예문 보기 →</button>
   `;
   document.getElementById('toStage3').onclick = () => goToStage3(scene, data);
   document.getElementById('backToStage1').onclick = () => {
@@ -126,7 +126,7 @@ function goToStage3(scene, data) {
   stage = 3;
   updateSteps();
 
-  const cards = data.sentences.map((s, i) => `
+  const cards = data.sentences.slice(0, 1).map((s, i) => `
     <div class="sentence-card">
       <span class="tag">예문 ${i + 1}</span><br>
       ${s}
@@ -134,7 +134,7 @@ function goToStage3(scene, data) {
   `).join('');
 
   els.card.innerHTML = `
-    <div class="stage-label">Step 3 · 이 장면을 영어로 말하는 3가지 방법</div>
+    <div class="stage-label">Step 3 · 이 장면을 영어로 말하는 방법</div>
     <div class="recap-kr">${scene.emoji} ${scene.kr}</div>
     <div class="sentence-list">${cards}</div>
   `;
