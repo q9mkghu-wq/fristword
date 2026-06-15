@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장면 → 단어 → 문장</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>장면 → 단어 → 문장</h1>
+    <span class="sub">First Word Builder</span>
+  </header>
+
+  <div class="round-counter" id="roundCounter">1 / 1000</div>
+
+  <div class="steps">
+    <div class="step" id="step1"><span class="num">1</span>상황</div>
+    <div class="step" id="step2"><span class="num">2</span>핵심 단어</div>
+    <div class="step" id="step3"><span class="num">3</span>예문 3개</div>
+  </div>
+
+  <div class="scene-card" id="sceneCard"></div>
+
+  <div class="controls" id="controls"></div>
+
+  <div class="memo-section">
+    <div class="memo-header">
+      <span class="stage-label" style="margin:0;">📝 내 메모</span>
+      <span class="memo-status" id="memoStatus"></span>
+    </div>
+    <textarea id="memoBox" class="memo-box" placeholder="공부하면서 계속 기억해두고 싶은 표현, 헷갈리는 패턴, 나만의 팁 등을 적어두세요. 자동으로 저장됩니다."></textarea>
+  </div>
+</div>
+
+<script src="firebase-config.js"></script>
+<script src="scenes.js"></script>
+<script src="precomputed.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
