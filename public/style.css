@@ -1,5 +1,4 @@
-
-  :root {
+:root {
     --ink: #1a1d2e;
     --paper: #f6f3ec;
     --accent: #ff6b4a;
@@ -21,7 +20,8 @@
     padding: 24px 16px;
   }
   .app { width: 100%; max-width: 480px; }
-/* Larger screens (tablets, e.g. 10" iPad in landscape/portrait) get a wider,
+
+  /* Larger screens (tablets, e.g. 10" iPad in landscape/portrait) get a wider,
      bigger-text layout so everything is readable from a distance. */
   @media (min-width: 700px) {
     .app { max-width: 760px; }
@@ -43,10 +43,10 @@
     .sentence-card .tag { font-size: 13px; padding: 4px 10px; }
     .btn { font-size: 20px; padding: 20px; }
     .jump-btn { font-size: 16px; padding: 14px; }
+    .known-btn { font-size: 18px; padding: 16px; }
     .round-counter { font-size: 16px; }
     .memo-box { font-size: 30px; }
   }
-
 
   header {
     display: flex;
@@ -175,13 +175,14 @@
   }
   .keyword-chip .en {
     font-family: var(--mono);
-    font-weight: 700;
-    font-size: 17px;
+    font-weight: 800;
+    font-size: 22px;
     color: var(--teal);
-    min-width: 90px;
+    min-width: 100px;
   }
   .keyword-chip .kr {
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--ink);
   }
 
@@ -258,6 +259,30 @@
   .btn.secondary {
     background: #fff;
     color: var(--ink);
+  }
+
+  /* Jump controls */
+  .jump-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .jump-btn {
+    background: var(--paper);
+    color: var(--teal);
+    border: 2px dashed var(--teal);
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .known-btn {
+    width: 100%;
+    margin-top: 8px;
+    background: var(--teal-soft);
+    color: var(--teal);
+    border: 2px solid var(--teal);
+    font-size: 13px;
+    padding: 10px;
   }
 
   .round-counter {
