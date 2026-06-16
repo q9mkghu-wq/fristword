@@ -12,6 +12,7 @@ let order = [];
 let idx = 0;
 let stage = 1; // 1, 2, 3
 const SESSION_SIZE = scenes.length;
+const knownSet = new Set(); // scene indices marked "아는 문장" for this session
 
 const els = {
   card: document.getElementById('sceneCard'),
@@ -83,6 +84,7 @@ function renderStage1(scene) {
 
   removeJumpControls();
   els.controls.insertAdjacentHTML('afterend', `
+    <button class="btn known-btn" id="knownBtn">✓ 아는 문장 — 건너뛰기</button>
     <div class="jump-controls" id="jumpControls">
       <button class="btn jump-btn" id="jumpBackBtn" ${jumpBackDisabled}>« 100개 뒤로</button>
       <button class="btn jump-btn" id="jumpFwdBtn" ${jumpFwdDisabled}>100개 앞으로 »</button>
@@ -90,11 +92,56 @@ function renderStage1(scene) {
   `);
   document.getElementById('jumpBackBtn').onclick = () => jumpBy(-100);
   document.getElementById('jumpFwdBtn').onclick = () => jumpBy(100);
+  document.getElementById('knownBtn').onclick = () => markKnownAndAdvance();
+}
+
+function markKnownAndAdvance() {
+  knownSet.add(order[idx]);
+  advanceToNextUnknown();
+}
+
+function advanceToNextUnknown() {
+  // Look forward for the next scene not marked as known.
+  for (let i = idx + 1; i < order.length; i++) {
+    if (!knownSet.has(order[i])) {
+      idx = i;
+      loadScene();
+      return;
+    }
+  }
+  // No unknown scenes left ahead — everything from here to the end is known.
+  // Wrap back to the start of this session's order and find the first unknown one.
+  for (let i = 0; i < order.length; i++) {
+    if (!knownSet.has(order[i])) {
+      idx = i;
+      loadScene();
+      return;
+    }
+  }
+  // Every single scene in this session has been marked known.
+  showAllKnownMessage();
+}
+
+function showAllKnownMessage() {
+  els.card.innerHTML = `
+    <div class="emoji">🎉</div>
+    <div class="kr-text">이번 세션의 모든 문장을 "아는 문장"으로 표시했어요!<br>새로고침하면 처음부터 다시 시작할 수 있어요.</div>
+  `;
+  els.controls.innerHTML = `<button class="btn" id="restartKnownBtn">전체 다시 시작</button>`;
+  removeJumpControls();
+  document.getElementById('restartKnownBtn').onclick = () => {
+    knownSet.clear();
+    order = shuffle(scenes.map((_, i) => i)).slice(0, SESSION_SIZE);
+    idx = 0;
+    loadScene();
+  };
 }
 
 function removeJumpControls() {
   const el = document.getElementById('jumpControls');
   if (el) el.remove();
+  const known = document.getElementById('knownBtn');
+  if (known) known.remove();
 }
 
 function jumpBy(amount) {
