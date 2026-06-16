@@ -21,6 +21,32 @@
     padding: 24px 16px;
   }
   .app { width: 100%; max-width: 480px; }
+/* Larger screens (tablets, e.g. 10" iPad in landscape/portrait) get a wider,
+     bigger-text layout so everything is readable from a distance. */
+  @media (min-width: 700px) {
+    .app { max-width: 760px; }
+    h1 { font-size: 30px; }
+    .sub { font-size: 14px; }
+    .step { font-size: 15px; padding: 12px 6px; }
+    .step .num { font-size: 22px; }
+    .scene-card { padding: 40px 36px; min-height: 320px; }
+    .emoji { font-size: 80px; }
+    .kr-text { font-size: 28px; line-height: 1.5; }
+    .speak-btn { font-size: 18px; padding: 14px 24px; }
+    .speak-btn svg { width: 22px; height: 22px; }
+    .stage-label { font-size: 15px; }
+    .recap-kr { font-size: 19px; }
+    .keyword-chip { padding: 18px 22px; }
+    .keyword-chip .en { font-size: 30px; min-width: 140px; }
+    .keyword-chip .kr { font-size: 24px; }
+    .sentence-card { font-size: 24px; padding: 22px 26px; }
+    .sentence-card .tag { font-size: 13px; padding: 4px 10px; }
+    .btn { font-size: 20px; padding: 20px; }
+    .jump-btn { font-size: 16px; padding: 14px; }
+    .round-counter { font-size: 16px; }
+    .memo-box { font-size: 30px; }
+  }
+
 
   header {
     display: flex;
