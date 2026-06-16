@@ -72,8 +72,8 @@ function renderStage1(scene) {
   const jumpBackDisabled = idx === 0 ? 'disabled' : '';
   const jumpFwdDisabled = idx >= order.length - 1 ? 'disabled' : '';
   els.controls.innerHTML = `
-    <button class="btn secondary" id="prevSceneBtn" ${prevDisabled}>← 이전 상황</button>
-    <button class="btn" id="nextBtn">핵심 단어 보기 →</button>
+    <button class="btn xl" id="nextBtn" style="flex: 1 0 100%;">핵심 단어 보기 →</button>
+    <button class="btn secondary" id="prevSceneBtn" style="flex: 1 0 100%; margin-top: 8px;" ${prevDisabled}>← 이전 상황</button>
   `;
   document.getElementById('nextBtn').onclick = () => goToStage2(scene);
   document.getElementById('prevSceneBtn').onclick = () => {
@@ -182,8 +182,8 @@ function renderStage2(scene, data) {
   `;
 
   els.controls.innerHTML = `
-    <button class="btn secondary" id="backToStage1">← 상황 다시 보기</button>
-    <button class="btn" id="toStage3">예문 보기 →</button>
+    <button class="btn xl" id="toStage3" style="flex: 1 0 100%;">예문 보기 →</button>
+    <button class="btn secondary" id="backToStage1" style="flex: 1 0 100%; margin-top: 8px;">← 상황 다시 보기</button>
   `;
   document.getElementById('toStage3').onclick = () => goToStage3(scene, data);
   document.getElementById('backToStage1').onclick = () => {
@@ -214,8 +214,8 @@ function goToStage3(scene, data) {
   const nextLabel = isLast ? '결과 끝 · 다시 시작' : '다음 상황 →';
 
   els.controls.innerHTML = `
-    <button class="btn secondary" id="backToStage2">← 단어 다시 보기</button>
-    <button class="btn" id="nextSceneBtn">${nextLabel}</button>
+    <button class="btn xl" id="nextSceneBtn" style="flex: 1 0 100%;">${nextLabel}</button>
+    <button class="btn secondary" id="backToStage2" style="flex: 1 0 100%; margin-top: 8px;">← 단어 다시 보기</button>
   `;
 
   document.getElementById('backToStage2').onclick = () => {
